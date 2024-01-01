@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'package:video_player_app/screens/videoPlayer.dart';
+import 'package:videoapp/screens/videoplayer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -88,13 +88,13 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(10),
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => VideoPlayers(
-                        //         video: video,
-                        //       ),
-                        //     ));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoPlayers(
+                                video: video,
+                              ),
+                            ));
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
