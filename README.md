@@ -6,11 +6,13 @@ A Flutter app that fetches video data from an API, displaying it on the homepage
 
 ### Homepage
 
-![Homepage](/screenshots/homepage.png)
+![Homepage](/home.png)
 
 ### Video Player Screen
 
-![Video Player Screen](/screenshots/videoplayer.png)
+![Video Player Screen](/video.png)
+![Video Player Screen](/videoplayer.png)
+
 
 ## Overview
 
