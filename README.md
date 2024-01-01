@@ -32,4 +32,4 @@ Clicking on a video thumbnail on the homepage navigates the user to the Video Pl
 1. **Clone the repository:**
 
    ```bash
-   [git clone https://github.com/your-username/your-repo.git](https://github.com/Mainul2723/Video_Player.git)https://github.com/Mainul2723/Video_Player.git
+   https://github.com/Mainul2723/Video_Player.git
