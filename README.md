@@ -33,3 +33,12 @@ Clicking on a video thumbnail on the homepage navigates the user to the Video Pl
 
    ```bash
    git clone https://github.com/your-username/your-repo.git
+
+2.  ```bash
+   cd your_repo
+3.  ```bash
+   flutter pub get
+4.  ```bash
+   flutter run
+
+
