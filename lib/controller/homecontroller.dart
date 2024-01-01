@@ -36,7 +36,8 @@ class HomeController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
+      final Map<String, dynamic> responseData =
+          json.decode(utf8.decode(response.bodyBytes));
       final List<dynamic> videoData = responseData['results'];
 
       if (videoData.isNotEmpty) {

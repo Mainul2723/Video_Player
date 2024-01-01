@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:videoapp/controller/homecontroller.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -45,7 +47,66 @@ class HomePage extends GetView<HomeController> {
                               },
                             ),
                             const SizedBox(height: 10),
-                            // Text(video['id'].toString()),
+                            ListTile(
+                              // leading: Image.asset(
+                              //   'assets/channel.png',
+                              //   width: 40,
+                              //   height: 40,
+                              // ),
+                              leading: Container(
+                                width: 50,
+                                height: 45,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/channel.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              title: Text(
+                                video['title'].toString(),
+                                style: GoogleFonts.mina(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              subtitle: Row(
+                                children: [
+                                  Text(
+                                    "${video['viewers']} Views",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    ".",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    DateFormat('MMM dd, yyyy').format(
+                                        DateTime.parse(video['created_at'])),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.more_vert)),
+                            ),
                           ],
                         ),
                       ),
