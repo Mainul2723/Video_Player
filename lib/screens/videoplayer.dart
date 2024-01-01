@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, file_names, avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +13,7 @@ class VideoPlayers extends StatefulWidget {
 
 class _VideoPlayersState extends State<VideoPlayers> {
   late FijkPlayer _controller;
+  bool isVideoPlaying = false;
 
   @override
   void initState() {
@@ -25,11 +24,21 @@ class _VideoPlayersState extends State<VideoPlayers> {
   void _initializeVideoPlayer() {
     _controller = FijkPlayer();
     _controller.setDataSource(widget.video['manifest'], autoPlay: true);
-    // print("URL: ");
-    // print(widget.video['manifest'].toString());
+
     _controller.addListener(() {
-      print(
-          "Error during playback: ${_controller.value.exception} - ${_controller.value.exception}");
+      setState(() {
+        isVideoPlaying = _controller.value.state == FijkState.started;
+      });
+    });
+
+    // Delay for 1 second and then play the video
+    Future.delayed(Duration(seconds: 3), () {
+      if (mounted) {
+        _controller.start();
+        setState(() {
+          isVideoPlaying = true;
+        });
+      }
     });
   }
 
@@ -44,6 +53,7 @@ class _VideoPlayersState extends State<VideoPlayers> {
     DateTime createdAt = DateTime.parse(widget.video['created_at']);
     DateTime currentDate = DateTime.now();
     int daysDifference = currentDate.difference(createdAt).inDays;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Video ID: ${widget.video['id'].toString()}'),
@@ -51,14 +61,61 @@ class _VideoPlayersState extends State<VideoPlayers> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const SizedBox(
-          //   height: 30,
-          // ),
-          FijkView(
-            player: _controller,
-            fit: FijkFit.contain,
-            width: 400,
-            height: 300,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // FijkView for video
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (_controller.value.state == FijkState.started) {
+                      _controller.pause();
+                    } else {
+                      _controller.start();
+                    }
+                  });
+                },
+                child: FijkView(
+                  player: _controller,
+                  fit: FijkFit.contain,
+                  width: 400,
+                  height: 300,
+                ),
+              ),
+              // Thumbnail
+              if (!isVideoPlaying)
+                Positioned.fill(
+                  child: Image.network(
+                    widget.video['thumbnail'],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      print('Image loading error: $error');
+                      return const Icon(Icons.error);
+                    },
+                  ),
+                ),
+              // Play button overlay
+              if (!isVideoPlaying)
+                Center(
+                  child: IconButton(
+                    icon: Icon(
+                      _controller.value.state == FijkState.started
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (_controller.value.state == FijkState.started) {
+                          _controller.pause();
+                        } else {
+                          _controller.start();
+                        }
+                      });
+                    },
+                  ),
+                ),
+            ],
           ),
           const SizedBox(
             height: 15,
@@ -195,7 +252,7 @@ class _VideoPlayersState extends State<VideoPlayers> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

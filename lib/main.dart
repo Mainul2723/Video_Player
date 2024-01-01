@@ -17,8 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
-    return Scaffold(
-      body: const HomePage(),
+    return Center(
+      child: Scaffold(
+        body: const HomePage(),
+      ),
     );
   }
 }
